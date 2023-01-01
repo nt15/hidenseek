@@ -19,6 +19,7 @@ if __name__ == "__main__":
         for shape1x in range(game.width):
             for shape1y in range(game.height):
                 for rotation in range(0, 271, 90):
+                    shape.reset()
                     game.reset_board()
                     shape.rotate(rotation)
                     if game.place_shape(shape, shape1x, shape1y):
@@ -33,23 +34,30 @@ if __name__ == "__main__":
     placed_gameboards = []
                 
     for T_placement in shape_placement["T"]:
-        game.reset_board()
+        game = GameBoard()
+        T.reset()
         T.rotate(T_placement[2])
         if not game.place_shape(T, T_placement[0], T_placement[1]):
-            throw("T placement failed")
+            SystemError("T placement failed")
         for U_placement in shape_placement["U"]:
+            gameT = copy.deepcopy(game)
+            U.reset()
             U.rotate(U_placement[2])
-            if game.place_shape(U, U_placement[0], U_placement[1]):
+            if gameT.place_shape(U, U_placement[0], U_placement[1]):
                 for FATL_placement in shape_placement["FATL"]:
+                    gameTU = copy.deepcopy(gameT)
+                    FATL.reset()
                     FATL.rotate(FATL_placement[2])
-                    if game.place_shape(FATL, FATL_placement[0], FATL_placement[1]):
+                    if gameTU.place_shape(FATL, FATL_placement[0], FATL_placement[1]):
                         for FUNNYF_placement in shape_placement["FUNNYF"]:
+                            gameTUFATL = copy.deepcopy(gameTU)
+                            FUNNYF.reset()
                             FUNNYF.rotate(FUNNYF_placement[2])
-                            if game.place_shape(FUNNYF, FUNNYF_placement[0], FUNNYF_placement[1]):
-                                placed_game = copy.deepcopy(game)
+                            if gameTUFATL.place_shape(FUNNYF, FUNNYF_placement[0], FUNNYF_placement[1]):
+                                placed_game = copy.deepcopy(gameTUFATL)
                                 placed_gameboards.append(placed_game)
                                 print("Found a solution")
-                                game.print_board()
+                                placed_game.print_board()
                                 print()                       
     
     print (f"Found {len(placed_gameboards)} solutions")
@@ -67,12 +75,21 @@ if __name__ == "__main__":
     #     shape3 = combination[2]
     #     for shape1_placement in shape_placement[shape1.get_name()]:
     #         game.reset_board()
+    #         shape1.reset()
+    #         if shape1_placement[3]:
+    #             shape1.flip()
     #         shape1.rotate(shape1_placement[2])
     #         if game.place_shape(shape1, shape1_placement[0], shape1_placement[1]):
     #             for shape2_placement in shape_placement[shape2.get_name()]:
+    #                 shape2.reset()
+    #                 if shape2_placement[3]:
+    #                     shape2.flip()
     #                 shape2.rotate(shape2_placement[2])
     #                 if game.place_shape(shape2, shape2_placement[0], shape2_placement[1]):
     #                     for shape3_placement in shape_placement[shape3.get_name()]:
+    #                         shape3.reset()
+    #                         if shape3_placement[3]:
+    #                             shape3.flip()
     #                         shape3.rotate(shape3_placement[2])
     #                         if game.place_shape(shape3, shape3_placement[0], shape3_placement[1]):
     #                             placed_game = copy.deepcopy(game)

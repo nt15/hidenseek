@@ -48,4 +48,11 @@ if __name__ == "__main__":
         FATL.print_shape()
         sys.exit(1)
     
+    FATL.flip()
+    if (FATL.shape == [[0, 1], [1, 1], [1, 1]]):
+        print("Shape is correct")
+    else:
+        print("Shape is incorrect")
+        FATL.print_shape()
+        sys.exit(1)
 

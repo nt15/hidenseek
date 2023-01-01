@@ -1,5 +1,11 @@
 import shapes.Shape as Shape
 import copy
+from shapes.t import T
+from shapes.u import U
+from shapes.fatl import FATL
+from shapes.funnyf import FUNNYF
+import sys
+
 
 class GameBoard:        
     def reset_board(self):
@@ -95,3 +101,29 @@ class GameBoard:
             return False
         self.board = copy.deepcopy(working_board)
         return True
+
+if __name__ == '__main__':
+    game_board = GameBoard()
+    game_board.print_board()
+    T.rotate(180)
+    if not game_board.place_shape(T, 4, 4):
+        print("Could not place shape")
+        game_board.print_board()
+        sys.exit(1)
+    U.rotate(90)
+    if not game_board.place_shape(U, 2, 4):
+        print("Could not place shape")
+        game_board.print_board()
+        sys.exit(1)
+    FATL.rotate(180)
+    if not game_board.place_shape(FATL, 5, 2):
+        print("Could not place shape")
+        game_board.print_board()
+        sys.exit(1)
+    FUNNYF.rotate(90)
+    if not game_board.place_shape(FUNNYF, 2, 2):
+        print("Could not place shape")
+        game_board.print_board()
+        sys.exit(1)
+    print("Success")
+    game_board.print_board()
