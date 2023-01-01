@@ -1,4 +1,5 @@
-import Shape
+import shapes.Shape as Shape
+import copy
 
 class GameBoard:        
     def reset_board(self):
@@ -18,22 +19,70 @@ class GameBoard:
         for x in range(self.startx, self.startx + self.center_width):
             for y in range(self.starty, self.starty + self.center_height):
                 self.board[y][x] = "empty"
+        self.animal_placement = [[0 for x in range(self.width)] for y in range(self.height)]
+        self.animal_placement[2][2] = "bat"
+        self.animal_placement[2][3] = "fox"
+        self.animal_placement[2][4] = "fox"
+        self.animal_placement[2][5] = "empty"
+        self.animal_placement[2][6] = "bat"
+        self.animal_placement[3][2] = "monkey"
+        self.animal_placement[3][3] = "jaguar"
+        self.animal_placement[3][4] = "tapir"
+        self.animal_placement[3][5] = "bat"
+        self.animal_placement[3][6] = "fox"
+        self.animal_placement[4][2] = "jaguar"
+        self.animal_placement[4][3] = "empty"
+        self.animal_placement[4][4] = "bear"
+        self.animal_placement[4][5] = "jaguar"
+        self.animal_placement[4][6] = "empty"
+        self.animal_placement[5][2] = "empty"
+        self.animal_placement[5][3] = "tapir"
+        self.animal_placement[5][4] = "fox"
+        self.animal_placement[5][5] = "monkey"
+        self.animal_placement[5][6] = "tapir"
+        self.animal_placement[6][2] = "fox"
+        self.animal_placement[6][3] = "bat"
+        self.animal_placement[6][4] = "empty"
+        self.animal_placement[6][5] = "empty"
+        self.animal_placement[6][6] = "jaguar"
+
 
     def __init__(self):
         self.reset_board()
+
+    def get_animals_left(self):
+        animals_left = []
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.board[y][x] == "outside":
+                    pass
+                elif self.board[y][x] == "empty":
+                    if self.animal_placement[y][x] != "empty":
+                        animals_left.append(self.animal_placement[y][x])
+                else:
+                    pass
+        animals_left.sort()
+        return animals_left
     
     def print_board(self):
         print('*********************************')
+        animals_left = []
         for y in range(self.height):
             for x in range(self.width):
-                print(self.board[y][x].center(10), end=" ")
+                if self.board[y][x] == "outside":
+                    pass
+                elif self.board[y][x] == "empty":
+                    print(self.animal_placement[y][x].center(10), end=" ")
+                    if self.animal_placement[y][x] != "empty":
+                        animals_left.append(self.animal_placement[y][x])
+                else:
+                    print(self.board[y][x].center(10), end=" ")
             print()
         print('*********************************')
+        print('Animals left: ', animals_left)
     def place_shape(self, shape, x, y):
         working_board = [[0 for x1 in range(self.width)] for y1 in range(self.height)]
-        for tx in range(self.width):
-            for ty in range(self.height):
-                working_board[tx][ty] = self.board[tx][ty]
+        working_board = copy.deepcopy(self.board)
         try:
             for shape_y in range(shape.height):
                 for shape_x in range(shape.width):
@@ -44,5 +93,5 @@ class GameBoard:
                             return False
         except IndexError:
             return False
-        self.board = working_board
+        self.board = copy.deepcopy(working_board)
         return True
