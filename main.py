@@ -5,7 +5,6 @@ from shapes.u import U
 from shapes.fatl import FATL
 from shapes.funnyf import FUNNYF
 import copy
-import itertools
 
 if __name__ == "__main__":
     game = GameBoard()
@@ -26,17 +25,14 @@ if __name__ == "__main__":
                         shape_placement[shape.get_name()].append((shape1x, shape1y, rotation))
                         pass
     
-    for shape in shape_placement:
-        print(f"Found {len(shape_placement[shape])} possible for shape {shape}" )
-        for placement in shape_placement[shape]:
-            print(f"Shape {shape} at {placement[0]}, {placement[1]} rotated {placement[2]}")
-    
     placed_gameboards = []
+    print ("Finding all possible solutions")
                 
     for T_placement in shape_placement["T"]:
         game = GameBoard()
         T.reset()
         T.rotate(T_placement[2])
+        print(".", end="")
         if not game.place_shape(T, T_placement[0], T_placement[1]):
             SystemError("T placement failed")
         for U_placement in shape_placement["U"]:
@@ -56,49 +52,10 @@ if __name__ == "__main__":
                             if gameTUFATL.place_shape(FUNNYF, FUNNYF_placement[0], FUNNYF_placement[1]):
                                 placed_game = copy.deepcopy(gameTUFATL)
                                 placed_gameboards.append(placed_game)
-                                print("Found a solution")
-                                placed_game.print_board()
-                                print()                       
+                    
     
     print (f"Found {len(placed_gameboards)} solutions")
 
-    # combinations = itertools.combinations(shapes, 3)
-    # for combination in combinations:
-    #     for shape in combination:
-    #         print(shape.get_name(), end=" ")
-    #     print()
-    
-    # combinations = itertools.combinations(shapes, 3)
-    # for combination in combinations:
-    #     shape1 = combination[0]
-    #     shape2 = combination[1]
-    #     shape3 = combination[2]
-    #     for shape1_placement in shape_placement[shape1.get_name()]:
-    #         game.reset_board()
-    #         shape1.reset()
-    #         if shape1_placement[3]:
-    #             shape1.flip()
-    #         shape1.rotate(shape1_placement[2])
-    #         if game.place_shape(shape1, shape1_placement[0], shape1_placement[1]):
-    #             for shape2_placement in shape_placement[shape2.get_name()]:
-    #                 shape2.reset()
-    #                 if shape2_placement[3]:
-    #                     shape2.flip()
-    #                 shape2.rotate(shape2_placement[2])
-    #                 if game.place_shape(shape2, shape2_placement[0], shape2_placement[1]):
-    #                     for shape3_placement in shape_placement[shape3.get_name()]:
-    #                         shape3.reset()
-    #                         if shape3_placement[3]:
-    #                             shape3.flip()
-    #                         shape3.rotate(shape3_placement[2])
-    #                         if game.place_shape(shape3, shape3_placement[0], shape3_placement[1]):
-    #                             placed_game = copy.deepcopy(game)
-    #                             placed_gameboards.append(placed_game)
-    #                             print("Found a solution")
-    #                             game.print_board()
-    #                             print()                                
-    # print (f"Found {len(placed_gameboards)} solutions")    
-    # get string from user end with blank line
     animals_desired = []
     while True:
         user_input = input("Enter a string: ")
@@ -119,5 +76,7 @@ if __name__ == "__main__":
             break
     if not found:
         print("No solution found")
+    
+
     
                                 
