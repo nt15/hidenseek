@@ -3,7 +3,7 @@ from shapes.Shape import Shape
 
 FATL = Shape("FATL", [[1, 0], [1, 1], [1, 1]])
 
-# write unit tests
+# test code
 
 if __name__ == "__main__":
     if (FATL.get_name() == "FATL"):

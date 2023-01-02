@@ -14,11 +14,9 @@ class GameBoard:
         self.center_width = 5
         self.center_height = 5
         # Create a 2D array of width x height
-        self.board = [[0 for x in range(self.width)] for y in range(self.height)]
+        self.board = [["outside" for x in range(self.width)] for y in range(self.height)]
         # set all values to outside
-        for y in range(self.height):
-            for x in range(self.width):
-                self.board[y][x] = "outside"
+
         # set the center cells to empty to indicate they are available
         self.startx = (int)((self.width - self.center_width)/2)
         self.starty = (int)((self.height - self.center_height)/2)
@@ -102,6 +100,7 @@ class GameBoard:
         self.board = copy.deepcopy(working_board)
         return True
 
+# Test code
 if __name__ == '__main__':
     game_board = GameBoard()
     game_board.print_board()

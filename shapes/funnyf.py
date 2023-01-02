@@ -3,7 +3,7 @@ from shapes.Shape import Shape
 
 FUNNYF = Shape("FUNNYF", [[0, 1, 1], [1, 1, 0], [0, 1, 0]])
 
-# write unit tests
+# Test code
 if __name__ == "__main__":
     if(FUNNYF.get_name() == "FUNNYF"):
         print("Name is correct")
