@@ -11,7 +11,7 @@ if __name__ == "__main__":
     shapes = [T, U, FATL, FUNNYF]
     print("Starting board")
     game.print_board()
-    # create an empty dictionary to store the shape placements
+    # First find all possible placements for each shape including rotation
     shape_placement = {}
     for shape in shapes:
         shape_placement[shape.get_name()] = []
@@ -27,7 +27,9 @@ if __name__ == "__main__":
     
     placed_gameboards = []
     print ("Finding all possible solutions")
-                
+    
+    # Now try to place all shapes in all possible combinations
+    # This is a brute force approach and will take a while
     for T_placement in shape_placement["T"]:
         game = GameBoard()
         T.reset()
@@ -56,6 +58,7 @@ if __name__ == "__main__":
     
     print (f"Found {len(placed_gameboards)} solutions")
 
+    # Now ask the user for the animals they want to see
     animals_desired = []
     while True:
         user_input = input("Enter animal name (bat, fox, tapir, jaguar, monkey, bear) blank to end: ")
@@ -68,6 +71,7 @@ if __name__ == "__main__":
     animals_desired.sort()
     print(animals_desired)
     found = False
+    # go through all the solutions and print the one that match the animals desired
     for placed_gameboard in placed_gameboards:
         if placed_gameboard.get_animals_left() == animals_desired:
             placed_gameboard.print_board()
