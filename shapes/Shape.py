@@ -17,11 +17,6 @@ class Shape:
         tuple = zip(*self.shape[::-1])
         self.shape = [list(row) for row in tuple]
     
-    def flip(self):
-        self.shape = [row[::-1] for row in self.shape]
-        self.width = len(self.shape[0])
-        self.height = len(self.shape)
-
     def rotate(self, degrees):
         if degrees == 0:
             pass

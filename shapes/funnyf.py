@@ -46,11 +46,3 @@ if __name__ == "__main__":
         print("Shape is incorrect")
         FUNNYF.print_shape()
         sys.exit(1)
-    
-    FUNNYF.flip()
-    if (FUNNYF.shape == [[1, 1, 0], [0, 1, 1], [0, 1, 0]]):
-        print("Shape is correct")
-    else:
-        print("Shape is incorrect")
-        FUNNYF.print_shape()
-        sys.exit(1)

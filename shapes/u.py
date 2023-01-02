@@ -47,10 +47,3 @@ if __name__ == "__main__":
         U.print_shape()
         sys.exit(1)
     
-    U.flip()
-    if (U.shape == [[1, 0, 1], [1, 1, 1]]):
-        print("Shape is correct")
-    else:
-        print("Shape is incorrect")
-        U.print_shape()
-        sys.exit(1)

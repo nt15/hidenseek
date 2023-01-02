@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     animals_desired = []
     while True:
-        user_input = input("Enter a string: ")
+        user_input = input("Enter animal name (bat, fox, tapir, jaguar, monkey, bear) blank to end: ")
         if user_input == "":
             break
         else:

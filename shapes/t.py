@@ -47,11 +47,5 @@ if __name__ == "__main__":
         print("Shape is incorrect")
         T.print_shape()
         sys.exit(1)
-    T.flip()
-    if (T.shape == [[1, 1, 1], [0, 1, 0], [0, 1, 0]]):
-        print("Shape is correct")
-    else:
-        print("Shape is incorrect")
-        T.print_shape()
-        sys.exit(1)
+
 
