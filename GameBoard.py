@@ -53,6 +53,22 @@ class GameBoard:
 
     def __init__(self):
         self.reset_board()
+    
+    def place_shape(self, shape, x, y):
+        working_board = [[0 for x1 in range(self.width)] for y1 in range(self.height)]
+        working_board = copy.deepcopy(self.board)
+        try:
+            for shape_y in range(shape.height):
+                for shape_x in range(shape.width):
+                    if shape.shape[shape_y][shape_x] == 1:
+                        if working_board[y + shape_y][x + shape_x] == "empty":
+                            working_board[y + shape_y][x + shape_x] = shape.get_name()
+                        else:
+                            return False
+        except IndexError:
+            return False
+        self.board = copy.deepcopy(working_board)
+        return True
 
     def get_animals_left(self):
         animals_left = []
@@ -84,21 +100,8 @@ class GameBoard:
             print()
         print('*********************************')
         print('Animals left: ', animals_left)
-    def place_shape(self, shape, x, y):
-        working_board = [[0 for x1 in range(self.width)] for y1 in range(self.height)]
-        working_board = copy.deepcopy(self.board)
-        try:
-            for shape_y in range(shape.height):
-                for shape_x in range(shape.width):
-                    if shape.shape[shape_y][shape_x] == 1:
-                        if working_board[y + shape_y][x + shape_x] == "empty":
-                            working_board[y + shape_y][x + shape_x] = shape.get_name()
-                        else:
-                            return False
-        except IndexError:
-            return False
-        self.board = copy.deepcopy(working_board)
-        return True
+
+
 
 # Test code
 if __name__ == '__main__':
