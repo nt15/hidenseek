@@ -5,6 +5,9 @@ from shapes.u import U
 from shapes.fatl import FATL
 from shapes.funnyf import FUNNYF
 import copy
+import itertools
+import time
+from uihandler import uihandler
 
 if __name__ == "__main__":
     game = GameBoard()
@@ -22,12 +25,15 @@ if __name__ == "__main__":
                     game.reset_board()
                     shape.rotate(rotation)
                     if game.place_shape(shape, shape1x, shape1y):
-                        shape_placement[shape.get_name()].append((shape1x, shape1y, rotation))
+                        shape_placement[shape.get_name()].append((shape1x, shape1y, rotation, shape))
                         pass
     
     placed_gameboards = []
     print ("Finding all possible solutions")
     
+    # time the process
+    start_time = time.time()
+
     # Now try to place all shapes in all possible combinations
     # This is a brute force approach and will take a while
     for T_placement in shape_placement["T"]:
@@ -57,6 +63,30 @@ if __name__ == "__main__":
                     
     
     print (f"Found {len(placed_gameboards)} solutions")
+    print (f"Time to find solutions: {time.time() - start_time}")
+
+    print ("Starting alternate solution finder")
+    start_time = time.time()
+    placed_gameboards = []
+    # Now try to place all shapes in all possible combinations
+    keys, values = zip(*shape_placement.items())
+    for experiment in itertools.product(*values):
+        game = GameBoard()
+        failed = False
+        for value in experiment:
+            shape = value[3]
+            shape.reset()
+            shape.rotate(value[2])
+            if not game.place_shape(shape, value[0], value[1]):
+                failed = True
+                break
+        if not failed:
+            placed_game = copy.deepcopy(game)
+            placed_gameboards.append(placed_game)
+    print (f"Found {len(placed_gameboards)} solutions")
+    print (f"Time to find solutions: {time.time() - start_time}")
+
+
 
     # Now ask the user for the animals they want to see
     animals_desired = []

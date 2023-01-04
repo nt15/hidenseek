@@ -83,7 +83,26 @@ class GameBoard:
                     pass
         animals_left.sort()
         return animals_left
+
+    def get_number_of_animals_left(self):
+        animals_left = self.get_animals_left()
+        number_of_animals_left = {}
+        for animal in animals_left:
+            if animal in number_of_animals_left:
+                number_of_animals_left[animal] += 1
+            else:
+                number_of_animals_left[animal] = 1
     
+    def get_contents(self):
+        contents = [["empty" for x in range(self.center_width)] for y in range(self.center_height)]
+        for y in range(self.center_height):
+            for x in range(self.center_width):
+                if self.board[y + self.starty][x + self.startx] == "empty":
+                    contents[y][x] = self.animal_placement[y + self.starty][x + self.startx]
+                else:
+                    contents[y][x] = self.board[y + self.starty][x + self.startx]
+        return contents
+
     def print_board(self):
         print('*********************************')
         animals_left = []
