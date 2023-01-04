@@ -61,7 +61,7 @@ def get_all_possible_placements():
                     
     
     print (f"Found {len(placed_gameboards)} solutions")
-    print (f"Time to find solutions: {time.time() - start_time}")
+    print (f"Time to find solutions: {round(time.time() - start_time)} seconds")
     return placed_gameboards
 
 if __name__ == "__main__":
