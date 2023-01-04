@@ -64,53 +64,5 @@ if __name__ == "__main__":
     
     print (f"Found {len(placed_gameboards)} solutions")
     print (f"Time to find solutions: {time.time() - start_time}")
-
-    print ("Starting alternate solution finder")
-    start_time = time.time()
-    placed_gameboards = []
-    # Now try to place all shapes in all possible combinations
-    keys, values = zip(*shape_placement.items())
-    for experiment in itertools.product(*values):
-        game = GameBoard()
-        failed = False
-        for value in experiment:
-            shape = value[3]
-            shape.reset()
-            shape.rotate(value[2])
-            if not game.place_shape(shape, value[0], value[1]):
-                failed = True
-                break
-        if not failed:
-            placed_game = copy.deepcopy(game)
-            placed_gameboards.append(placed_game)
-    print (f"Found {len(placed_gameboards)} solutions")
-    print (f"Time to find solutions: {time.time() - start_time}")
-
-
-
-    # Now ask the user for the animals they want to see
-    animals_desired = []
-    while True:
-        user_input = input("Enter animal name (bat, fox, tapir, jaguar, monkey, bear) blank to end: ")
-        if user_input == "":
-            break
-        else:
-            animals_desired.append(user_input)
-
-    # sort the animals_desired list
-    animals_desired.sort()
-    print(animals_desired)
-    found = False
-    # go through all the solutions and print the one that match the animals desired
-    for placed_gameboard in placed_gameboards:
-        if placed_gameboard.get_animals_left() == animals_desired:
-            placed_gameboard.print_board()
-            print()
-            found = True
-            break
-    if not found:
-        print("No solution found")
-    
-
-    
-                                
+    uihandler1 = uihandler(placed_gameboards)
+    uihandler1.main()

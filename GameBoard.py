@@ -86,12 +86,10 @@ class GameBoard:
 
     def get_number_of_animals_left(self):
         animals_left = self.get_animals_left()
-        number_of_animals_left = {}
+        number_of_animals_left = {"bear": 0, "tapir": 0, "fox": 0, "jaguar": 0, "monkey": 0, "bat": 0}
         for animal in animals_left:
-            if animal in number_of_animals_left:
                 number_of_animals_left[animal] += 1
-            else:
-                number_of_animals_left[animal] = 1
+        return number_of_animals_left
     
     def get_contents(self):
         contents = [["empty" for x in range(self.center_width)] for y in range(self.center_height)]

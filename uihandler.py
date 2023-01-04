@@ -6,15 +6,19 @@ from shapes.fatl import FATL
 from shapes.funnyf import FUNNYF
 
 class uihandler:
-    def __init__(self, placed_gameboard) -> None:
-        self.placed_gameboard = placed_gameboard
+    def __init__(self, placed_gameboards) -> None:
+        self.placed_gameboards = placed_gameboards
         self.number_of_animals = {"bear": 0, "tapir": 0, "fox": 0, "jaguar": 0, "monkey": 0, "bat": 0}
     
     def solve(self, labels, images):
         # go through all the solutions and print the one that match the animals desired
         for placed_gameboard in self.placed_gameboards:
-            if placed_gameboard.get_number_of_animals_left() == self.number_of_animals:
+            number_of_animals_left = placed_gameboard.get_number_of_animals_left()
+            if number_of_animals_left == self.number_of_animals:
                 self.display_gameboard(placed_gameboard, labels, images)
+                return
+        # create a new message box 
+        tkinter.messagebox.showinfo("No solution", "No solution found")
 
     def display_gameboard(self, gameboard, labels, images):
         content = gameboard.get_contents()
