@@ -25,7 +25,7 @@ class uihandler:
         content = gameboard.get_contents()
         for y in range(len(content)):
             for x in range(len(content[y])):
-                labels[y * gameboard.center_width + x].config(image=images[content[y][x]])
+                labels[y][x].config(image=images[content[y][x]])
 
     def on_click(self, event, animal, text_label):
         if self.number_of_animals[animal] >= 3:
@@ -56,8 +56,8 @@ class uihandler:
         fatl = tkinter.PhotoImage(file="images/fatl.png")
         funnyf = tkinter.PhotoImage(file="images/funnyf.png")
 
+        
         animals = {}
-        animals["empty"] = empty
         animals["bear"] = bear
         animals["tapir"] = tapir
         animals["fox"] = fox
@@ -65,45 +65,41 @@ class uihandler:
         animals["monkey"] = monkey
         animals["bat"] = bat
 
-        shapes = {}
-        shapes["T"] = t
-        shapes["U"] = u
-        shapes["FATL"] = fatl
-        shapes["FUNNYF"] = funnyf
-
-        # merge the two dictionaries
         images = {}
         images.update(animals)
-        images.update(shapes)
+
+        images["empty"] = empty
+        images["T"] = t
+        images["U"] = u
+        images["FATL"] = fatl
+        images["FUNNYF"] = funnyf
 
         # create a list of labels
-        labels = []
+        labels = [[0 for x in range(gameboard.center_height)] for y in range(gameboard.center_width)]
         for y in range (gameboard.center_height):
             for x in range (gameboard.center_width):
-                labels.append(tkinter.Label(frame, image=images["empty"]))
+                labels[y][x] = tkinter.Label(frame, image=images["empty"])
 
         self.display_gameboard(gameboard, labels, images)
 
-
         # add the labels to the grid
-        for i in range(5):
-            for j in range(5):
-                labels[i * 5 + j].grid(row=i, column=j)
+        for y in range(5):
+            for x in range(5):
+                labels[y][x].grid(row=y, column=x)
 
         # create second grid
         frame2 = tkinter.Frame(root, borderwidth=10)
         frame2.grid()
-        # add bear image
+        # add animals at bottom for user input on what is needed
         column = 0
         for animal in animals:
-            if animal != "empty":
-                text_label = tkinter.Label(frame2, text=str(self.number_of_animals[animal]))
-                text_label.grid(row=1, column=column)
-                image_label = tkinter.Label(frame2, image=animals[animal])
-                image_label.bind("<Button-1>", lambda event, animal=animal, text_label=text_label: self.on_click(event, animal, text_label))
-                image_label.grid(row=0, column=column)
-                column = column + 1
-        # add button
+            text_label = tkinter.Label(frame2, text=str(self.number_of_animals[animal]))
+            text_label.grid(row=1, column=column)
+            image_label = tkinter.Label(frame2, image=animals[animal])
+            image_label.bind("<Button-1>", lambda event, animal=animal, text_label=text_label: self.on_click(event, animal, text_label))
+            image_label.grid(row=0, column=column)
+            column = column + 1
+        # add button to solve
         button = tkinter.Button(frame2, text="Solve", command=lambda: self.solve(labels, images))
         button.grid(row=2, column=0, columnspan=6)
         root.mainloop()

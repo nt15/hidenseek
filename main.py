@@ -1,15 +1,13 @@
 from GameBoard import GameBoard
-from shapes.Shape import Shape
 from shapes.t import T
 from shapes.u import U
 from shapes.fatl import FATL
 from shapes.funnyf import FUNNYF
 import copy
-import itertools
 import time
 from uihandler import uihandler
 
-if __name__ == "__main__":
+def get_all_possible_placements():
     game = GameBoard()
     shapes = [T, U, FATL, FUNNYF]
     print("Starting board")
@@ -64,5 +62,9 @@ if __name__ == "__main__":
     
     print (f"Found {len(placed_gameboards)} solutions")
     print (f"Time to find solutions: {time.time() - start_time}")
+    return placed_gameboards
+
+if __name__ == "__main__":
+    placed_gameboards = get_all_possible_placements()
     uihandler1 = uihandler(placed_gameboards)
     uihandler1.main()
